@@ -1,0 +1,50 @@
+@CHARSET "UTF-8";
+
+	body {
+		padding: 	0px;
+		text-align:	center;					/*文字水平居中*/
+	}
+	table {
+		border-collapse:	collapse;   	/*边框折叠*/
+	}
+	td, th {								/*设置td和th的默认样式*/
+		height:		40px;
+		padding:	5px;					/*设置内边距*/
+		border: 	none;					/*设置无边框。默认无背景色*/
+		text-align:	center;
+	}
+	.tr_header {							/*表头所在的行*/
+		background:	#4488BB !important; 	/*如果不用!important声明为最优先，则会被奇数行的背景色取代*/
+		color:		#FFF    !important;
+		font-size:	small;
+	}
+	.table_border td, th {					/*针对table_border的子元素td,th。（所有层次的子元素）*/
+		border: 	1px solid #DDE;
+	}
+	.table_padding10 td, th {				/*针对table_padding10的子元素td,th。（所有层次的子元素）*/
+		padding:	10px;					/*设置内边距*/
+	}
+	.table_border_bg tr:nth-child(odd) { 	/*第奇数个子元素。nth即第n个*/
+	    background:	#FFF;
+	}
+	.table_border_bg tr:nth-child(even) {  	/*第偶数个子元素*/
+	    background:	#F6F6F6;
+	}
+	.table_hover tr:hover {             	/*鼠标悬停。冒号表示伪类选择器。针对table_hover的子元素tr*/
+	    background:	#FDC;
+	}
+	
+	.left {
+		text-align:	left;					/*文字水平靠左*/
+	}
+	.center {
+		text-align:	center;					/*文字水平居中*/
+	}
+	.right {
+		text-align:	right;					/*文字水平靠右*/
+	}
+	
+	.msg {
+		font-size:	small;
+		color: 		red;
+	}

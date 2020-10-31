@@ -1,0 +1,85 @@
+<%@page import="data.db"%>
+<%@page import="java.sql.ResultSet"%>
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>删除图书</title>
+<link rel="stylesheet" href="css/css.css">
+</head>
+
+<body background="image/3.jpg">
+	<div style="width:600px;margin:10px auto;line-height:40px;">
+		<h3>删除图书</h3>
+		<span class="msg"> <%
+ 	request.setCharacterEncoding("utf-8");
+ 	String msg = "";
+ 	String back = "&emsp;<a href='javascript:window.history.back();'>后退</a>";
+	String userId=session.getAttribute("loginUserId").toString();
+ 	if (session.getAttribute("loginUsername") == null) {
+ 		msg = "您的登录已失效！请重新登录。";
+ 		msg += "&emsp;<a href='Login.jsp'>登录</a>";
+ 		out.print(msg);
+ 		return;
+ 	}
+
+ 	String loginMark = session.getAttribute("loginMark").toString();
+
+ 	if (loginMark.equals("admin") == false) {
+ 		msg = "您的权限不足！";
+ 		msg += "&emsp;<a href='main.jsp?userId="+userId+"'>用户功能</a>";
+ 		out.print(msg);
+ 		return;
+ 	}
+ 	String bookId = request.getParameter("bookId");
+
+ 	try {
+ 		Integer.parseInt(bookId);
+ 	} catch (Exception e) {
+ 		msg = "参数needId错误！" + back;
+ 		out.print(msg);
+ 		return;
+ 	}
+
+ 	String sql = "";
+ 	ResultSet rs = null;
+
+ 	sql = "select * from buyBook where bookId='" + bookId + "'";
+ 	rs = db.select(sql);
+
+ 	if (rs == null) {
+ 		msg = "数据库操作发生错误！" + back;
+ 		out.print(msg);
+ 		return;
+ 	}
+
+ 	if (rs.next() == false) {
+ 		db.close();
+ 		msg = "对应的记录已不存在！" + back;
+ 		out.print(msg);
+ 		return;
+ 	}
+	
+	rs.close();
+	
+	sql="delete from buyBook where bookId='"+bookId+"'";
+	int count=db.delete(sql);
+	
+	if(count==0){
+		msg="刪除图书信息失敗！請重試。"+back;
+		out.print(msg);
+		return;
+	}
+	msg="刪除图书信息成功！";
+	out.print(msg);
+ 	
+ %>
+		</span>
+
+		
+		<br> <a href="bookInfo.jsp?userId=<%=userId %>">返回</a>
+
+	</div>
+</body>
+</html>
